@@ -2,11 +2,25 @@
 <html>
     <head>
         <meta charset="UTF-8">
+		<meta charset="utf-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+       
+	    {% block stylesheets %}
+		
+		{{ encore_entry_link_tags('app') }}
+		
+		{% endblock %}
+
     </head>
-    <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+
     </body>
+    
 </html>
+
