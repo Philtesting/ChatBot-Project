@@ -34,7 +34,7 @@
     
                                         <div class="media-body pad-hor">
                                             <div class="speech">
-                                                <p>Hello Lucy, how can I help you today ?</p>
+                                                <p>Bonjours je suis le chatbot, comment vous aidez?</p>
                                                 </p>
                                             </div>
                                         </div>
@@ -46,34 +46,36 @@
                         <!--Widget footer-->
                         <div class="panel-footer">
                             <div class="row">
-                                <div class="col-xs-9">
-                                    <input id ="textbox" type="text" placeholder="Enter your text" class="form-control chat-input" name="data">
-                                </div>
-                                <div class="col-xs-3">
-                                    <button id="sendMessage" class="btn btn-primary btn-block" type="submit" >Send</button>
-                                </div>
+                                <form id="formtest" name = "questionValue">
+                                    <div class="col-xs-9">
+                                        <input id ="textbox" type="text" placeholder="Enter your text" class="form-control chat-input" name="question">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <button id="sendMessage" name="test" class="btn btn-primary btn-block" type="submit" >Send</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php         
-            $result = $_COOKIE['data'];
-            $ch = curl_init() ;
-            $tokenWit = "Authorization: Bearer ODFJVKZRIHQ63W7UHJYZFTQE3D3XXOOR";
-            $url =  'https://api.wit.ai/message?v=20200228&q='.$result;
-
-            curl_setopt($ch,CURLOPT_URL, $url);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, $url);
-            curl_setopt($ch,CURLOPT_HTTPHEADER, array("$tokenWit"));
-
-            $data = curl_exec($ch);
-            curl_close($ch);
-            $messageJson = json_decode($data);
-            $messageJson = json_decode($data);
-            ($messageJson->{'entities'})
-
+        <?php
+        // define variables and set to empty values
+        
+        if (isset($_POST["test"])) {
+            $question = $_POST["question"];
+            $ok = "ok";
+            echo $question;
+          }
+        
+        
+        function test_input($data) {
+          $data = trim($data);
+          $data = stripslashes($data);
+          $data = htmlspecialchars($data);
+          return $data;
+        }
         ?>
     </body>
     <script src="script.js"></script>

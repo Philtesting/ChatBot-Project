@@ -1,17 +1,23 @@
+/*
 var textbox = document.getElementById("textbox");
 var button = document.getElementById("sendMessage");
+*/
 var answerbox = document.getElementById("answerbox");
+var formQ = document.forms["questionValue"]["question"];
+var formId = document.getElementById('formtest');
 var d = new Date();
 
-button.addEventListener("click", function(){
-    if(textbox.value.length === 0 || !textbox.value.trim()){
-        return
-    }
-    createResponse()
-    sendToAPI()
-    textbox.value = "";
-});
 
+formId.addEventListener("submit", function(){
+    cookieTime()
+    docformIdment.getElementById("myForm").submit();
+    createResponse()
+});
+/*
+button.addEventListener("click", function(){
+    createResponse()
+});
+*/
 function createResponse(){
     var marBtn = document.createElement("li");
      marBtn.classList.add("mar-btn");
@@ -29,7 +35,7 @@ function createResponse(){
 
      var newMessage = document.createElement("p");
      newMessage.setAttribute('id','question')
-     newMessage.innerHTML = textbox.value;
+     newMessage.innerHTML = document.cookie;
      messageBox.appendChild(newMessage);
 
      var timeBox = document.createElement("p");
@@ -49,9 +55,8 @@ function createResponse(){
 
 }
 
-function sendToAPI(message){
-    d.setTime(d.getTime() + (1*24*60*60*1000));
+function cookieTime(){
+    d.setTime(d.getTime() + (60*60*1000));
     var expires = "expires="+ d.toUTCString();
-    document.cookie = "data="+ textbox.value +";"+ expires;
-    console.log(expires)
+    document.cookie = "data="+ formQ.value +";"+ expires;
 }

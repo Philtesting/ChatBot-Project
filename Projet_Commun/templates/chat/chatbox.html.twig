@@ -42,17 +42,17 @@
 							<div class="col-xs-3">
 								<button id="sendMessage" class="btn btn-primary btn-block" type="submit" >Send</button>
 								<?php         
-									$ch = curl_init() ;
-									$tokenWit = "Authorization: Bearer ODFJVKZRIHQ63W7UHJYZFTQE3D3XXOOR";
-									$url =  'https://api.wit.ai/message?v=20200228&q=hello';
+								$ch = curl_init() ;
+								$tokenWit = "Authorization: Bearer ODFJVKZRIHQ63W7UHJYZFTQE3D3XXOOR";
+								$url =  'https://api.wit.ai/message?v=20200228&q=hello';
 
-									curl_setopt($ch,CURLOPT_URL, $url);
-									curl_setopt($ch,CURLOPT_RETURNTRANSFER, $url);
-									curl_setopt($ch,CURLOPT_HTTPHEADER, array("$tokenWit"));
+								curl_setopt($ch,CURLOPT_URL, $url);
+								curl_setopt($ch,CURLOPT_RETURNTRANSFER, $url);
+								curl_setopt($ch,CURLOPT_HTTPHEADER, array("$tokenWit"));
 
-									$data = curl_exec($ch);
-									curl_close($ch);
-									echo $data;
+								$data = curl_exec($ch);
+								curl_close($ch);
+								echo $data;
 								?>
 							</div>
 						</div>
