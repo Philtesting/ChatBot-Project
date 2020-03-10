@@ -159,14 +159,6 @@ body{
     transition: all .25s;
 }
 
-.form-control {
-    font-size: 11px;
-    height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #e9e9e9;
-    transition-duration: .5s;
-}
 .nano>.nano-pane {
     background-color: rgba(0,0,0,0.1);
     position: absolute;
@@ -177,4 +169,20 @@ body{
     opacity: 0;
     -webkit-transition: all .7s;
     transition: all .7s;
+}
+
+.chatPos {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+ }
+
+ .greenBox {
+    position: relative;
+    background: #b7dcfe;
+    color: #317787;
+    display: inline-block;
+    border-radius: 0;
+    padding: 12px 20px;
+    border-radius:25px;
 }
