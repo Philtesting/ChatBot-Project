@@ -1,7 +1,7 @@
-
+// Initialisation des variables
 var textbox = document.getElementById("textbox");
 var button = document.getElementById("sendMessage");
-var answerbox = document.getElementById("answerbox");
+var answerbox = document.getElementById("answerbox"); 
 
 
 
@@ -9,70 +9,70 @@ var convertir = document.getElementById("convertir");
 var banqMoi = document.getElementById("banqMoi");
 var banqPret = document.getElementById("pret");
 
-var calcBtn = document.getElementById("sendConv");
+var calcBtn = document.getElementById("sendConv");//On récupère des éléments grâce a leur classe dans le .php
 
-const CLIENT_TOKEN = 'ODFJVKZRIHQ63W7UHJYZFTQE3D3XXOOR'
-const uri = 'https://api.wit.ai/message?q=';
-const auth = 'Bearer ' + CLIENT_TOKEN;
+const CLIENT_TOKEN = 'ODFJVKZRIHQ63W7UHJYZFTQE3D3XXOOR' //Clé utilisée pour se connecter à l'Api
+const uri = 'https://api.wit.ai/message?q='; //l'Url de l'API
+const auth = 'Bearer ' + CLIENT_TOKEN; // Permet la connexion en ajoutant Bearer à la clé
 
-function pressEnter(evt) {
+function pressEnter(evt) { // si on appuie sur entrer ça appelle updatechat()
     if(evt.keyCode == 13){
         updateChat()
     }
 }
 
-function sendCurrency(){
-    var baseCurrencyInput = document.getElementById('currency-1');
+function sendCurrency(){ // Récupère quelle monnaie on souhaite convertir, en quoi , et la quantité 
+    var baseCurrencyInput = document.getElementById('currency-1'); 
     var secondCurrencyInput = document.getElementById('currency-2');
     var amountInput = document.getElementById('amount');
     
     var amount = amountInput.value;
-    if(amount == '0' || amount.length === 0 || !amount.trim()){
+    if(amount == '0' || amount.length === 0 || !amount.trim()){ //Vérifie si la quantité est vide alors ne fait rien
         return
     }
     var before = baseCurrencyInput.value;
     var after = secondCurrencyInput.value;
-    textbox.value= amount+" "+before+" en "+after
+    textbox.value= amount+" "+before+" en "+after // Concaténation des 3 valeurs
     updateChat()
 }
 
-convertir.addEventListener("click", function(){
+convertir.addEventListener("click", function(){ //Event quand on clique sur le bouton convertir
     textbox.value="Convertir de la monnaie"
     updateChat()
 });
 
-banqPret.addEventListener("click", function(){
+banqPret.addEventListener("click", function(){ //Event quand on clique sur le bouton "eligibilité au pret bancaire"
     textbox.value="Eligibilité au prêt bancaire"
     updateChat()
 });
 
-banqMoi.addEventListener("click", function(){
+banqMoi.addEventListener("click", function(){ //Event quand on clique sur le bouton quelle banque pour moi
     textbox.value="Quelle banque pour moi ?"
     updateChat()
 });
 
-button.addEventListener("click", function(){
+button.addEventListener("click", function(){ 
     updateChat()
 });
 
-function updateChat(){
-    var start = new Date().getTime();
+function updateChat(){ // Cliquer sur Send ou Entrer
+    var start = new Date().getTime(); //permet de calculer le temps
     console.log(start)
 
-    if(textbox.value.lenght === 0 || !textbox.value.trim()){
+    if(textbox.value.lenght === 0 || !textbox.value.trim()){ //Vérifie si texte est vide (ou que des espaces)  
         textbox.value = '';
-        return
+        return //permet au chatbot de ne rien faire si le texte est vide
     }
-    clientQuestion(textbox.value)
+    clientQuestion(textbox.value) 
     sendToApi(textbox.value)
-    textbox.value = '';
+    textbox.value = ''; //puisque ça été envoyé a l'API on réinitialise
 
-    var end = new Date().getTime();
-    console.log("cela a pris " + (end - start) + " milliseconds pour executer");
+    var end = new Date().getTime(); // fin calcul de temps
+    console.log("cela a pris " + (end - start) + " milliseconds pour executer"); //affcihe dans la console le temps qui a été prit
 } 
 
-function clientQuestion(msg){
-
+function clientQuestion(msg){ // Permet tout l'affichage lors de la question de l'utilisateur
+ //Quand on envoie quelque chose au bot, une transformation de l'affichage se fait
     var marBtn = document.createElement("li");
     marBtn.classList.add("mar-btm");
     answerbox.appendChild(marBtn);
@@ -119,21 +119,21 @@ function cookieTime(){
 }
 
 function sendToApi(msg){
-    let q = encodeURIComponent(msg);
-    fetch(uri+q, {
+    let q = encodeURIComponent(msg); //formate le message sous le format url car il ne peut être directement envoyé
+    fetch(uri+q, { // // fetch la concaténation
         headers: {
             Authorization: auth
         }
     })
-    .then(res => res.json())
+    .then(res => res.json()) // transforme la réponse en .json si ce n'est pas déjà le cas
     
     .then(function(data) {
-        let entities = data.entities
+        let entities = data.entities //récupère entities dans le fichier JSON
         if(Object.entries(entities).length === 0 && entities.constructor === Object){
             chatBotResponse("Désolé je ne comprends pas ce que vous voulez dire par "+ data._text)
         }
         else{
-            if (entities.intent[0].confidence < 0.5){
+            if (entities.intent[0].confidence < 0.5){ // Si le chatbot n'est pas sûr de sa question il répond pas
                 chatBotResponse("Je ne me suis pas encore assez entrainé pour répondre à votre demande")
             }
             else{
@@ -142,7 +142,7 @@ function sendToApi(msg){
         }
     })
     
-    .catch(err => {
+    .catch(err => { // erreur car ne reconnait pas ce qu'on a demandé au chatbot
         console.log(err)
         chatBotResponse("Je ne suis pas sûre d'avoir bien compris. Pourriez-vous préciser votre demande?")
     });
